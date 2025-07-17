@@ -1,0 +1,52 @@
+<%- include('partials/header.ejs'); -%>
+
+<link rel="stylesheet" href="/styles/alarm.css" />
+
+<div class="wrapper">
+  <img src="/assets/files/clock.jpg" alt="clock" />
+  <h2 id="current-time" class="clock-time">00:00:00 AM</h2>
+
+  <div class="content">
+    <div class="column">
+      <select name="hour">
+        <option value="Hour" selected disabled hidden>Hour</option>
+      </select>
+    </div>
+    <div class="column">
+      <select name="minute">
+        <option value="Minute" selected disabled hidden>Minute</option>
+      </select>
+    </div>
+    <div class="column">
+      <select name="ampm">
+        <option value="AM/PM" selected disabled hidden>AM/PM</option>
+      </select>
+    </div>
+  </div>
+
+  <button>Set Alarm</button>
+
+  <!-- Audio file to play -->
+  <audio id="alarm-audio" src="/assets/files/ringtone.mp3" preload="auto"></audio>
+</div>
+
+<script src="/scripts/alarm.js"></script>
+
+<!-- Live ticking clock -->
+<!-- <script>
+  function updateCurrentTime() {
+    const timeEl = document.getElementById("current-time");
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    timeEl.textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+  }
+
+  setInterval(updateCurrentTime, 1000);
+  updateCurrentTime();
+</script> -->
+
+<%- include('partials/footer.ejs'); -%>

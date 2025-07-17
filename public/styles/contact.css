@@ -1,0 +1,166 @@
+/* contact.css - Permalist style */
+
+body {
+  background: linear-gradient(135deg, #f3e8ff, #e6d6f8);
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-section {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.contact-card {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  flex: 1;
+  transition: transform 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: scale(1.02);
+}
+
+.profile-pic img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #a683e3;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.intro h1 {
+  font-size: 32px;
+  color: #4b0082;
+  margin-bottom: 10px;
+}
+
+.intro p {
+  font-size: 16px;
+  color: #333;
+  line-height: 1.6;
+}
+
+.social-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social-links a {
+  color: #6a0dad;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #4b0082;
+  text-decoration: underline;
+}
+
+.message-form {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  flex: 1;
+}
+
+.message-form h2 {
+  font-size: 26px;
+  color: #6a0dad;
+  margin-bottom: 20px;
+}
+
+.message-form input,
+.message-form textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #a683e3;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+}
+
+.message-form input:focus,
+.message-form textarea:focus {
+  box-shadow: 0 0 8px #a683e3;
+}
+
+.message-form button {
+  background-color: #a683e3;
+  color: white;
+  font-size: 16px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.message-form button:hover {
+  background-color: #8d5fd3;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .contact-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-card, .message-form {
+    width: 100%;
+  }
+}
+
+/* Animations */
+.animate-slidein {
+  animation: slideIn 1s ease forwards;
+}
+
+.animate-fadein {
+  animation: fadeIn 1.5s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

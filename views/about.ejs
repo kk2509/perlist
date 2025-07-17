@@ -1,0 +1,42 @@
+<%- include('partials/header.ejs'); -%>
+
+<link rel="stylesheet" href="/styles/about.css" />
+
+<section class="about-container">
+  <div class="intro-text animate-fadein">
+    <h1>About Permalist</h1>
+    <p>
+      Permalist is more than a productivity tool — it's your personal growth partner.  
+      Whether you're setting tasks, checking progress, or simply reflecting on your day,  
+      Permalist is designed to bring clarity, intention, and peace to your everyday workflow.
+    </p>
+  </div>
+
+  <div class="introspection-section animate-slideup">
+    <h2>🧠 Introspect Your Day</h2>
+    <form action="/introspect" method="POST">
+      <textarea name="introspection" placeholder="Write your thoughts, reflections, or lessons from today..." required></textarea>
+      <input type="date" name="entryDate" value="<%= new Date().toISOString().split('T')[0] %>" required />
+      <button type="submit">Save Reflection</button>
+    </form>
+  </div>
+
+  <div class="past-reflections">
+    <h3>Your Reflections</h3>
+    <% if (reflections.length > 0) { %>
+      <ul>
+        <% reflections.forEach(entry => { %>
+  <li>
+    <strong><%= new Date(entry.date).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" }) %></strong><br>
+    <em><%= entry.content %></em>
+  </li>
+<% }); %>
+
+      </ul>
+    <% } else { %>
+      <p>No reflections yet.</p>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer.ejs'); -%>

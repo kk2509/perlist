@@ -1,0 +1,98 @@
+
+<%- include('partials/header.ejs'); -%>
+
+<div class="box" id="heading">
+
+  <h1>Permalist</h1>
+  </div>
+
+ 
+
+<div class="box">
+  <% for (let item of listItems) { %>
+    <div class="item">
+      <!-- delete checkbox -->
+      <form action="/delete" method="post">
+        <input type="checkbox" onchange="this.form.submit()" name="deleteItemId" value="<%= item.id %>">
+      </form>
+
+      <!-- member name -->
+      <p class="member"><strong><%= item.member %></strong>:</p>
+
+      <!-- item title -->
+      <p id="title<%= item.id %>"><%= item.title %></p>
+
+      <!-- due date -->
+      <p class="due-date">Due: <%= item.due_date ? item.due_date.toISOString().split('T')[0] : 'No date' %></p>
+
+      <!-- edit form -->
+      <form class="edit" action="/edit" method="post">
+        <input type="hidden" name="updatedItemId" value="<%= item.id %>">
+        <input id="input<%= item.id %>" type="text" name="updatedItemTitle" value="<%= item.title %>" autocomplete="off" hidden />
+        <button id="done<%= item.id %>" class="edit" type="submit" hidden>
+          <img class="icon" src="/assets/icons/check-solid.svg" alt="tick">
+        </button>
+      </form>
+
+      <!-- edit button -->
+      <button id="edit<%= item.id %>" class="edit" onclick="handler('<%= item.id %>')">
+        <img class="icon" src="/assets/icons/pencil-solid.svg" alt="edit">
+      </button>
+    </div>
+    
+  <% } %>
+
+  <!-- add new item -->
+  <form class="item" action="/add" method="post">
+    <select name="memberId" required>
+      <% members.forEach(member => { %>
+        <option value="<%= member.id %>"><%= member.name %></option>
+      <% }); %>
+    </select>
+    <input type="text" name="newItem" placeholder="New Item" autocomplete="off" required />
+    <input type="date" name="dueDate" />
+    <button class="add" type="submit">+</button>
+  </form>
+</div>
+<!-- slideshow section -->
+ <div class="daily-section">
+  <div class="quote-box animate-fadein">
+    <h2>🌟 Daily Motivation</h2>
+    <blockquote>
+      “<%= quote %>”
+      <footer>— <%= author %></footer>
+    </blockquote>
+  </div>
+
+  <div class="challenge-box animate-slideup">
+    <h2>🔥 Daily Challenge</h2>
+    <p><%= challenge %></p>
+  </div>
+</div>
+
+
+
+<script>
+  function handler(id) {
+    document.getElementById("title" + id).setAttribute("hidden", true);
+    document.getElementById("edit" + id).setAttribute("hidden", true);
+    document.getElementById("done" + id).removeAttribute("hidden");
+    document.getElementById("input" + id).removeAttribute("hidden");
+  }
+  let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  const slides = document.getElementsByClassName("slide");
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) slideIndex = 1;
+  slides[slideIndex - 1].style.display = "block";
+  setTimeout(showSlides, 2500); // Change image every 2.5 seconds
+}
+
+</script>
+
+<%- include('partials/footer.ejs'); -%> 

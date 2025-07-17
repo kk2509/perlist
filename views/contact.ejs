@@ -1,0 +1,32 @@
+<%- include('partials/header.ejs'); -%>
+
+<link rel="stylesheet" href="/styles/contact.css" />
+
+<section class="contact-section">
+  <div class="contact-card animate-slidein">
+    <div class="profile-pic">
+      <img src="/assets/images/me.jpg" alt="My photo" />
+    </div>
+    <div class="intro">
+      <h1>Let's Connect 🚀</h1>
+      <p>Hey! I'm a student at <strong>JECRC University</strong>, a passionate learner constantly seeking growth and opportunities to create meaningful tech. If you believe in collaboration, innovation, or just want to say hi, I’d love to hear from you!</p>
+      <ul class="social-links">
+        <li><a href="https://linkedin.com/in/khanak-khandelwal" target="_blank">🔗 LinkedIn</a></li>
+        <li><a href="https://github.com/kk2509" target="_blank">💻 GitHub</a></li>
+        <li><a href="mailto:khanak.profid@gmail.com.com">✉️ Email</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="message-form animate-fadein">
+    <h2>📬 Drop me a message</h2>
+    <form action="/contact" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<%- include('partials/footer.ejs'); -%>
