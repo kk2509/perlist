@@ -1,6 +1,4 @@
-// ─────────────────────────────────────────────
 // Imports and Setup
-// ─────────────────────────────────────────────
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
@@ -9,15 +7,14 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import dotenv from "dotenv";
 import axios from "axios";
+import { getGeminiResponse } from "./chatbot.js";
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
 
-// ─────────────────────────────────────────────
-// PostgreSQL DB Connection
-// ─────────────────────────────────────────────
+// PostgreSQL DB connection
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
@@ -27,9 +24,8 @@ const db = new pg.Client({
 });
 db.connect();
 
-// ─────────────────────────────────────────────
 // Middleware Setup
-// ─────────────────────────────────────────────
+
 app.use(session({
   secret: "yourSecretKey",
   resave: false,
@@ -47,9 +43,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// ─────────────────────────────────────────────
 // Google OAuth Setup
-// ─────────────────────────────────────────────
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -78,9 +72,8 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-// ─────────────────────────────────────────────
 // Daily Challenge Generator
-// ─────────────────────────────────────────────
+
 const dailyChallenges = [
   "Do not use social media for 1 hour",
   "Complete your hardest task first",
@@ -94,9 +87,8 @@ function getRandomChallenge() {
   return dailyChallenges[index];
 }
 
-// ─────────────────────────────────────────────
 // Home Route: with Motivation + Challenge
-// ─────────────────────────────────────────────
+
 app.get("/", async (req, res) => {
   try {
     const quoteRes = await axios.get("https://zenquotes.io/api/today");
@@ -131,9 +123,9 @@ app.get("/", async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
+
 // Authentication Routes
-// ─────────────────────────────────────────────
+
 app.get("/auth/google", passport.authenticate("google", { scope: ["profile"] }));
 app.get("/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/login" }),
@@ -148,9 +140,9 @@ app.get("/logout", (req, res) => {
   });
 });
 
-// ─────────────────────────────────────────────
+
 // CRUD Routes for To-Do Items
-// ─────────────────────────────────────────────
+
 app.post("/add", async (req, res) => {
   const { newItem, memberId, dueDate } = req.body;
   try {
@@ -181,9 +173,9 @@ app.post("/delete", async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
+
 // Alarm, Calendar, About, Contact Pages
-// ─────────────────────────────────────────────
+
 app.get("/alarm", (req, res) => {
   res.render("alarm");
 });
@@ -218,9 +210,17 @@ app.post("/contact", async (req, res) => {
   }
 });
 
-// ─────────────────────────────────────────────
+//chatbot
+
+app.post("/chat", async (req, res) => {
+  const userMessage = req.body.message;
+  const response = await getGeminiResponse(userMessage);
+  res.send({ reply: response });
+});
+
+
 // Start Server
-// ─────────────────────────────────────────────
+
 app.listen(port, () => {
-  console.log(`✅ Permalist server running at http://localhost:${port}`);
+  console.log(` Permalist server running at http://localhost:${port}`);
 });
